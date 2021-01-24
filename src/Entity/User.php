@@ -42,6 +42,16 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registration_date;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $last_login;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,6 +138,30 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getRegistrationDate(): ?\DateTimeInterface
+    {
+        return $this->registration_date;
+    }
+
+    public function setRegistrationDate(\DateTimeInterface $registration_date): self
+    {
+        $this->registration_date = $registration_date;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->last_login;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $last_login): self
+    {
+        $this->last_login = $last_login;
 
         return $this;
     }

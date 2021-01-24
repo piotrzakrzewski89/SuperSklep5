@@ -1,0 +1,68 @@
+{% trans_default_domain 'app' %}
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('main')}}">SuperSklep5</a>
+        <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+            &#9776;
+        </button>
+        <div class="collapse navbar-collapse" id="exCollapsingNavbar">
+            <ul class="nav navbar-nav">
+                <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Service</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">More</a></li>
+            </ul>
+            <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+                <li class="dropdown">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"><b>{{ 'main.login.login_title'|trans }}</b> <span class="caret"></span></a></button>
+			        <ul id="login-dp" class="dropdown-menu">
+				        <li>
+					        <div class="row">
+						        <div class="col-md-12">							
+								    <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+									    <div class="form-group">
+										    <label class="sr-only" for="exampleInputEmail2">{{ 'main.login.login_email'|trans }}</label>
+										    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="{{ 'main.login.login_email'|trans }}" required>
+									    </div>
+									    <div class="form-group">
+										    <label class="sr-only" for="exampleInputPassword2">{{ 'main.login.login_pass'|trans }}</label>
+										    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="{{ 'main.login.login_pass'|trans }}" required>
+                                            <div class="help-block text-right"><a href="">{{ 'main.login.login_forget'|trans }}</a></div>
+									    </div>
+									    <div class="form-group">
+										    <button type="submit" class="btn btn-primary btn-block">{{ 'main.login.login_submit'|trans }}</button>
+									    </div>
+									    <div class="checkbox">
+										    <label>
+										    <input type="checkbox"> {{ 'main.login.login_keep_login'|trans }}
+										    </label>
+									    </div>
+								    </form>
+							    </div>
+							    <div class="bottom text-center">
+								    {{ 'main.login.login_new_here'|trans }} <a href="{{ path('app_register') }}"><b>{{ 'main.login.login_register'|trans }}</b></a>
+							    </div>
+					        </div>
+				        </li>
+			        </ul>
+                </li>
+            </ul>                
+            <ul class="nav navbar-nav flex-row justify-content-between ml-2">
+                <li class="dropdown">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"><b>{{ app.request.get('_locale')|upper }}</b> <span class="caret"></span></a></button>
+                    <ul id="locale-dp" class="dropdown-menu">
+                        <li>
+					        <div class="row">
+                                <div class="col-md-12">	
+                            	    <a class="dropdown-item" href="{{ path('change_lang', {_locale: 'pl'}) }}">PL</a>
+			                        <a class="dropdown-item" href="{{ path('change_lang', {_locale: 'en'}) }}">EN</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

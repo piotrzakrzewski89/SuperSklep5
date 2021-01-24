@@ -1,0 +1,10 @@
+{% trans_default_domain 'app' %}
+<!-- START Bootstrap-Cookie-Alert -->
+<div class="alert text-center cookiealert" role="alert">
+	{{ 'cookies.contents'|trans|raw }}
+	<a href="https://cookiesandyou.com/" target="_blank"></a>
+	<button type="button" class="btn btn-primary btn-sm acceptcookies">
+		{{ 'cookies.button'|trans }}
+	</button>
+</div>
+<!-- END Bootstrap-Cookie-Alert -->

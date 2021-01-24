@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="SuperSklep5">
+		<meta name="author" content="Piotr Zakrzewski">
+		<title>
+			{% block title %}SuperSklep5
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<!-- Custom styles for this template -->
+			<link href="{{ asset('assets/css/shop-homepage.css')}}" rel="stylesheet">
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
+		{% endblock %}
+	</head>
+	<body>
+		{% include 'inc/nav.html.twig' %}
+		{% include 'inc/flash_messeges.html.twig' %}
+		{% block body %}{% endblock %}
+		{% include 'inc/footer.html.twig' %}
+		{% include 'inc/modal.html.twig' %}
+		{% include 'inc/cookies.html.twig' %}
 
-        {% block javascripts %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{% block javascripts %}
+			<!-- Bootstrap core JavaScript -->
+			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
+			<script src="https://cdn.tiny.cloud/1/qoj0g1gtwwrui5rjqcrzv73ze1u3wy1l4rsrwojnyo4p9vfq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+			<script>
+				tinymce.init({
+selector: 'textarea',
+plugins: "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,imagemanager,filemanager",
+language: "pl",
+imagetools_cors_hosts: ['picsum.photos'],
+menubar: 'file edit view insert format tools table help',
+toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+toolbar_sticky: true,
+height: 600
+});
+			</script>
+
+			<script>
+				$('#myModal').on('shown.bs.modal', function () {
+$('#myInput').trigger('focus')
+})
+			</script>
+		{% endblock %}
+	</body>
 </html>
