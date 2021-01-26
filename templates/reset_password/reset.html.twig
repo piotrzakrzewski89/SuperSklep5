@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Reset your password{% endblock %}
+{% trans_default_domain 'app' %}
+{% block title %}
+	{{parent()}}
+	{{ 'page_title.reset_password_page'|trans }}
+{% endblock %}
 
 {% block body %}
-    <h1>Reset your password</h1>
-
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+	<br><h1>{{ 'reset_password.title_label'|trans }}</h1>
+	{% form_theme resetForm 'bootstrap_4_layout.html.twig' %}
+	{{ form_start(resetForm) }}
+	{{ form_row(resetForm.plainPassword) }}
+	<button class="btn btn-outline-primary">{{ 'reset_password.form.password_button'|trans }}</button>
+	{{ form_end(resetForm) }}
+	<br>
 {% endblock %}

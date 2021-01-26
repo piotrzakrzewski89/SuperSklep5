@@ -1,0 +1,48 @@
+page_title:
+    main_page: Strona główna
+    register_page: Rejestracja
+    login_page: Logowanie
+    reset_password_page: Resetowanie Hasła
+    reset_password_sended_page: Email z linkiem wysłany
+
+register_form:
+    title_label: Rejestracja
+    email_label: Email
+    button_label: Zarejestruj
+    password_first: Hasło
+    password_second: Hasło (Powtórz)
+    password_message_min: Twoje hasło powinno zawierać conajmniej {{ limit }} znaków.
+    password_message: Twoje hasło powinno zawierać 1 cyfre, 1 duży znak oraz 1 znak specjalny.
+    agree_terms_label: Akceptuje Regulamin
+    agree_terms_message: Powinienieś zaakceptować regulamin.
+
+reset_password:
+    title_label: Resetowanie hasła
+    contents: Wprowadź swój adres email aby otrzymać mail z linkiem do strony z resetowaniem hasła.
+    button: Wyślij mail z linkiem  
+    form:
+        email_label: Adres Email                          
+        message: Wprowadź proszę adres email
+        password_first_label: Nowe Hasło
+        password_second_label: Powtórz Hasło
+        password_message: Pole nie może być puste
+        password_message_invalid: Pola muszą się zgadzać
+        password_button: Resetuj Hasło
+    sended_page_1: An email has been sent that contains a link that you can click to reset your password. This link will expire in 1 hour.
+    sended_page_2: If you don't receive an email please check your spam folder or try again.
+
+main:
+    login:
+        login_title: Logowanie
+        login_email: Addres Email
+        login_pass: Hasło
+        login_submit: Zaloguj
+        login_forget: Zapomniałeś hasła ?
+        login_keep_login: Zapamiętaj mnie
+        login_new_here: Nowy tutaj ?
+        login_register: Zarejestruj
+
+cookies:
+    contents: Strona do poprawnego działania potrzebuje wykorzystywać 🍪 pliki cookies 🍪 .
+    button: Akceptuję
+

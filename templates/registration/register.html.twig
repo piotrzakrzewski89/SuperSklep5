@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'app' %}
 
-{% block title %}{{parent()}} {{ 'page_title.register_page'|trans }} {% endblock %}
-
-{% block body %}
-
-	<h1>Rejestracja</h1>
-	{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+{% block title %}
+	{{parent()}}
+	{{ 'page_title.register_page'|trans }}
 {% endblock %}
 
+{% block body %}
+	<br>
+	<h1>{{ 'register_form.title_label'|trans }}</h1>
+	{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+	{{ form_start(registrationForm) }}
+	{{ form_row(registrationForm.email) }}
+	{{ form_row(registrationForm.plainPassword) }}
+	{{ form_row(registrationForm.agreeTerms) }}
+
+	<button type="submit" class="btn btn-outline-primary">{{ 'register_form.button_label'|trans }}</button>
+	{{ form_end(registrationForm) }}
+	<br>
+{% endblock %}

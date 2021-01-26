@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Password Reset Email Sent{% endblock %}
+{% trans_default_domain 'app' %}
+{% block title %}
+	{{parent()}}
+	{{ 'page_title.reset_password_sended_page'|trans }}
+{% endblock %}
 
 {% block body %}
     <p>

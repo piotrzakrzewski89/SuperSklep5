@@ -1,0 +1,31 @@
+page_title:
+    main_page: Main Page 
+    register_page: Registration
+
+register_form:
+    title_label: Registation
+    email_label: Email
+    button_label: Register
+    password_first: Password
+    password_second: Password (Repeat)
+    password_message_min: Twoje hasło powinno zawierać conajmniej {{ limit }} znaków.
+    password_message: Twoje hasło powinno zawierać 1 cyfre, 1 duży znak oraz 1 znak specjalny.
+    agree_terms_label: I accept the terms and conditions
+    agree_terms_message: Powinienieś zaakceptować regulamin.
+
+reset_password:
+    title_label: Resetowanie hasła
+    contents: Enter your email address and we we will send you a link to reset your password.
+    button: Send Password reset Email   
+    
+main:
+    login:
+        login_title: Login
+        login_email: Address Email
+        login_pass: Password
+        login_submit: Sign In
+        login_forget: Forget Password ?
+        login_keep_login: Keep me logged-in
+        login_new_here: New here ?
+        login_register: Register
+

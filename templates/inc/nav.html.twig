@@ -1,4 +1,4 @@
-{% trans_default_domain 'app' %}
+ {% trans_default_domain 'app' %}
   <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation">
     <div class="container">
@@ -14,39 +14,25 @@
                 <li class="nav-item"><a href="#" class="nav-link">More</a></li>
             </ul>
             <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
-                <li class="dropdown">
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"><b>{{ 'main.login.login_title'|trans }}</b> <span class="caret"></span></a></button>
-			        <ul id="login-dp" class="dropdown-menu">
-				        <li>
+            {% if app.user %}
+            	<li class="dropdown">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"><b>{{ app.user.username }}</b> <span class="caret"></span></a></button>
+                    <ul id="locale-dp" class="dropdown-menu">
+                        <li>
 					        <div class="row">
-						        <div class="col-md-12">							
-								    <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-									    <div class="form-group">
-										    <label class="sr-only" for="exampleInputEmail2">{{ 'main.login.login_email'|trans }}</label>
-										    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="{{ 'main.login.login_email'|trans }}" required>
-									    </div>
-									    <div class="form-group">
-										    <label class="sr-only" for="exampleInputPassword2">{{ 'main.login.login_pass'|trans }}</label>
-										    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="{{ 'main.login.login_pass'|trans }}" required>
-                                            <div class="help-block text-right"><a href="">{{ 'main.login.login_forget'|trans }}</a></div>
-									    </div>
-									    <div class="form-group">
-										    <button type="submit" class="btn btn-primary btn-block">{{ 'main.login.login_submit'|trans }}</button>
-									    </div>
-									    <div class="checkbox">
-										    <label>
-										    <input type="checkbox"> {{ 'main.login.login_keep_login'|trans }}
-										    </label>
-									    </div>
-								    </form>
-							    </div>
-							    <div class="bottom text-center">
-								    {{ 'main.login.login_new_here'|trans }} <a href="{{ path('app_register') }}"><b>{{ 'main.login.login_register'|trans }}</b></a>
-							    </div>
-					        </div>
-				        </li>
-			        </ul>
+                                <div class="col-md-12">	
+                            	    <a class="dropdown-item" href="">Panel uzytkownika</a>
+			                        <a href="{{ path('app_logout') }}">Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
+	        {% else %}
+                <li class="dropdown">
+                    <a href="{{ path('app_login') }}" class="btn btn-outline-secondary">{{ 'main.login.login_title'|trans }}</a>
+                </li>
+                {% endif %}
             </ul>                
             <ul class="nav navbar-nav flex-row justify-content-between ml-2">
                 <li class="dropdown">
@@ -55,8 +41,8 @@
                         <li>
 					        <div class="row">
                                 <div class="col-md-12">	
-                            	    <a class="dropdown-item" href="{{ path('change_lang', {_locale: 'pl'}) }}">PL</a>
-			                        <a class="dropdown-item" href="{{ path('change_lang', {_locale: 'en'}) }}">EN</a>
+                            	    <a class="dropdown-item" href="{{ path('main', {_locale: 'pl'}) }}">PL</a>
+			                        <a class="dropdown-item" href="{{ path('main', {_locale: 'en'}) }}">EN</a>
                                 </div>
                             </div>
                         </li>
@@ -66,3 +52,8 @@
         </div>
     </div>
 </nav>
+
+
+
+
+								  

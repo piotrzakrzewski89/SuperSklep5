@@ -6,15 +6,14 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\AppAuthenticator;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Service\SendEmialToUserService;
 
 class RegistrationController extends AbstractController
 {
@@ -28,7 +27,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/{_locale}/register", name="app_register")
      */
-    public function register($_locale, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator, SendEmialToUserService $SendEmialToUserService): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -36,6 +35,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $user->setRegistrationDate(new \DateTime());
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -48,20 +48,15 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('piotrzakrzewski@piotrzakrzewski89.pl', 'no-reply'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+            $SendEmialToUserService->sendMailToUser($user,$entityManager );
             // do anything else you need here, like send an email
 
+            $this->addFlash('success', 'Rejestracja powiodła się, aktywuj konto poprzez link aktywacyjny wysłany e-mailem. Potwierdzenie adresu wiąże się z uaktywnieniem konta.');
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
-                'main' // firewall name in security.yaml
+                'app_register' // firewall name in security.yaml
             );
         }
 
@@ -83,12 +78,12 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('main');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Twoje konto zostało aktywowane oraz email zweryfikowany.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('main');
     }
 }

@@ -11,38 +11,54 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'label' => 'register_form.email_label',
+                'translation_domain' => 'app'
+            ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'register_form.agree_terms_label',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'register_form.agree_terms_message',
                     ]),
                 ],
+                'translation_domain' => 'app'
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Pola hasła powinny się zgadzać.',
                 'mapped' => false,
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options'  => ['label' => 'register_form.password_first'],
+                'second_options' => ['label' => 'register_form.password_second'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'register_form.password.message',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'register_form.password_message_min',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    new Regex([
+                        'pattern' => '"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$"',
+                        'message' => 'register_form.password_message_regex',
+                    ]),
                 ],
-            ])
-        ;
+                'translation_domain' => 'app'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
