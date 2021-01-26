@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.main_admin_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		{% include 'inc/admin_panel.html.twig' %}
+		<div class="col-lg-9">
+			<h1>Panel Administratora</h1>
+		</div>
+	</div>
+{% endblock %}

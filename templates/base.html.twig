@@ -15,6 +15,7 @@
 			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
+			<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous"/>
 		{% endblock %}
 	</head>
 	<body>
@@ -34,7 +35,13 @@
 				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 				<script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
 				<script src="https://cdn.tiny.cloud/1/qoj0g1gtwwrui5rjqcrzv73ze1u3wy1l4rsrwojnyo4p9vfq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
+				<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+				<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+				<script src="{{ asset('assets/js/chart-pie-demo.js')}}"></script>
+				<script src="{{ asset('assets/js/chart-area-demo.js')}}"></script>
+				<script src="{{ asset('assets/js/chart-bar-demo.js')}}"></script>
+				<script src="{{ asset('assets/js/datatables-demo.js')}}"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 				<script>
 					tinymce.init({
 selector: 'textarea',
@@ -47,6 +54,37 @@ toolbar_sticky: true,
 height: 600
 });
 				</script>
+				<script>
+					$('#dataTable').DataTable({
+"language": {
+"sEmptyTable": "Brak danych w tabeli",
+"sInfo": "Pokazuję _START_ do _END_ z _TOTAL_ wpisów",
+"sInfoEmpty": "Pokazuję 0 do 0 z 0 wpisów",
+"sInfoFiltered": "(Przefiltrowano z _MAX_ całkowitych wpisów)",
+"sInfoPostFix": "",
+"sInfoThousands": ",",
+"sLengthMenu": "Pokaż _MENU_ wpisów",
+"sLoadingRecords": "Ładuje...",
+"sProcessing": "Przetwarzam...",
+"sSearch": "Szukaj:",
+"sZeroRecords": "Nie znaleziono pasującego wyniku",
+"oPaginate": {
+"sFirst": "Pierwszy",
+"sLast": "Ostatni",
+"sNext": "Następny",
+"sPrevious": "Poprzedni"
+},
+"oAria": {
+"sSortAscending": ": activate to sort column ascending",
+"sSortDescending": ": activate to sort column descending"
+}
+}
+});
+$(function () {
+$('[data-toggle="tooltip"]').tooltip()
+})
+				</script>
+
 
 				<script>
 					$('#myModal').on('shown.bs.modal', function () {

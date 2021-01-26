@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.users_manage_admin_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<br>
+	<div class="row">
+		{% include 'inc/admin_panel.html.twig' %}
+		<div class="card col-lg-9">
+			<div class="card-header">
+				<i class="fas fa-table mr-1"></i>
+				Tabelka Zarządzanie użytkownikami
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>email</th>
+								<th>role</th>
+								<th>aktywnność</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>email</th>
+								<th>role</th>
+								<th>aktywnność</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							{% for user in usersData %}
+								<tr>
+									<td>{{ loop.index }}</td>
+									<td>{{ user.id }}</td>
+									<td>{{ user.email }}</td>
+									<td>{{ user.roles|join }}</td>
+									<td>{{ user.isVerified }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+{% endblock %}
