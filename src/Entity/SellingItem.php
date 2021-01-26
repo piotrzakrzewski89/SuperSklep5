@@ -39,6 +39,12 @@ class SellingItem
      */
     private $images;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="sellingItems")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -111,6 +117,18 @@ class SellingItem
                 $image->setSellingItem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

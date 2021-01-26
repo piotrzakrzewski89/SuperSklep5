@@ -1,16 +1,21 @@
 <div class="col-lg-3">
 	<br>
-	Panel Admina
-	<div class="list-group">
-		<a href="#" class="list-group-item">Kategorie</a>
-		<a href="#" class="list-group-item">Przedmioty</a>
-		<a href="#" class="list-group-item">Tranzakcje</a>
-	</div>
+	{% if is_granted('ROLE_ADMIN') %}
+		Panel Admina
+		<div class="list-group">
+			<a href="{{ path('category') }}" class="list-group-item">Kategorie</a>
+			<a href="{{ path('selling_item') }}" class="list-group-item">Przedmioty</a>
+			<a href="#" class="list-group-item">Transakcje</a>
+		</div>
+	{% endif %}
 	<br>
-	Panel SuperAdmina
-	<div class="list-group">
-		<a href="{{ path('users_manage') }}" class="list-group-item">Użytkownicy</a>
-	</div>
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+		Panel SuperAdmina
+		<div class="list-group">
+			<a href="{{ path('language') }}" class="list-group-item">Języki</a>
+			<a href="{{ path('users_manage') }}" class="list-group-item">Użytkownicy</a>
+		</div>
+	{% endif %}
 	<br>
 </div>
 <!-- /.col-lg-3 -->

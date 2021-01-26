@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LanguageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,21 @@ class Language
      * @ORM\Column(type="string", length=255)
      */
     private $code;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Category::class, mappedBy="language", cascade={"persist", "remove"})
+     */
+    private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SellingItem::class, mappedBy="language", orphanRemoval=true)
+     */
+    private $sellingItems;
+
+    public function __construct()
+    {
+        $this->sellingItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +69,53 @@ class Language
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category): self
+    {
+        // set the owning side of the relation if necessary
+        if ($category->getLanguage() !== $this) {
+            $category->setLanguage($this);
+        }
+
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SellingItem[]
+     */
+    public function getSellingItems(): Collection
+    {
+        return $this->sellingItems;
+    }
+
+    public function addSellingItem(SellingItem $sellingItem): self
+    {
+        if (!$this->sellingItems->contains($sellingItem)) {
+            $this->sellingItems[] = $sellingItem;
+            $sellingItem->setLanguage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSellingItem(SellingItem $sellingItem): self
+    {
+        if ($this->sellingItems->removeElement($sellingItem)) {
+            // set the owning side to null (unless already changed)
+            if ($sellingItem->getLanguage() === $this) {
+                $sellingItem->setLanguage(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{parent()}}
+	{{ 'page_title.category_new_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<br>
+	<h1>{{ 'category_form.title_label'|trans }}</h1>
+	{% form_theme categoryForm 'bootstrap_4_layout.html.twig' %}
+	{{ form_start(categoryForm) }}
+	{{ form_row(categoryForm.name) }}
+	{{ form_row(categoryForm.code) }}
+	{{ form_row(categoryForm.language) }}
+	<button type="submit" class="btn btn-outline-primary">{{ 'category_form.button_label'|trans }}</button>
+	{{ form_end(categoryForm) }}
+	<br>
+{% endblock %}

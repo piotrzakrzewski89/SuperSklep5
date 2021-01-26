@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{parent()}}
+	{{ 'page_title.langauge_new_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<br>
+	<h1>{{ 'langauge_form.title_label'|trans }}</h1>
+	{% form_theme sellingItemForm 'bootstrap_4_layout.html.twig' %}
+	{{ form_start(sellingItemForm) }}
+	{{ form_row(sellingItemForm.title) }}
+	{{ form_row(sellingItemForm.description) }}
+	{{ form_row(sellingItemForm.category) }}
+	{{ form_row(sellingItemForm.language) }}
+	<button type="submit" class="btn btn-outline-primary">{{ 'language_form.button_label'|trans }}</button>
+	{{ form_end(sellingItemForm) }}
+	<br>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.user_panel_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		{% include 'inc/user_panel.html.twig' %}
+		<div class="col-lg-9">
+			<h1>Panel Użytkownika</h1>
+		</div>
+	</div>
+{% endblock %}

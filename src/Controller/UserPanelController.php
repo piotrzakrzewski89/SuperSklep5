@@ -7,17 +7,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Admin controller.
+ * UserPanel controller.
  *
- * @Route("/admin")
+ * @Route("/user_panel")
  */
-class AdminController extends AbstractController
+class UserPanelController extends AbstractController
 {
-    /**
-     *@Route("/{_locale}", name="admin")
-     */
+    #[Route('/{_locale}', name: 'user_panel')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig', []);
+        return $this->render('user_panel/index.html.twig', []);
     }
 }
