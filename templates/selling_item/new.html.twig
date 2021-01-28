@@ -12,11 +12,14 @@
 	{% form_theme sellingItemForm 'bootstrap_4_layout.html.twig' %}
 	{{ form_start(sellingItemForm) }}
 	{{ form_row(sellingItemForm.title) }}
-	{{ form_row(sellingItemForm.description) }}
 	{{ form_row(sellingItemForm.price) }}
-	{{ form_row(sellingItemForm.category) }}
-	{{ form_row(sellingItemForm.language) }}
+	{{ form_row(sellingItemForm.quantity) }}
+	{{ form_row(sellingItemForm.expiry_data) }}
+	{{ form_row(sellingItemForm.publication) }}
 	{{ form_row(sellingItemForm.images) }}
+		{{ form_row(sellingItemForm.category) }}
+	{{ form_row(sellingItemForm.language) }}
+	{{ form_row(sellingItemForm.description) }}
 	<div class="form-inline">
 		{{ form_row(sellingItemForm.save, {'attr': {'class': 'btn btn-outline-primary'}}) }}
 		{{ form_row(sellingItemForm.save_add_next, {'attr': {'class': 'btn btn-outline-success'}}) }}

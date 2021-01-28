@@ -6,6 +6,11 @@
 	{{ 'page_title.selling_item_admin_page'|trans }}
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
+{% endblock %}
+
 {% block body %}
 	<br>
 	<div class="row">
@@ -14,7 +19,7 @@
 			<div class="card-header">
 				<i class="fas fa-table mr-1"></i>
 				Tabelka Przedmioty
-				<a class="btn btn-info float-right" href="{{ path('selling_item_new') }}">Dodaj Przedmiot</a>
+				<a class="btn btn-outline-info float-right" href="{{ path('selling_item_new') }}">Dodaj Przedmiot</a>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -23,12 +28,19 @@
 							<tr>
 								<th>#</th>
 								<th>title</th>
+								<th>ilosc</th>
+								<th>data wygasniecia</th>
+								<th style='width: 170px'></th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
 								<th>#</th>
 								<th>title</th>
+								<th>ilosc</th>
+								<th>data wygasniecia</th>
+								<th></th>
+
 							</tr>
 						</tfoot>
 						<tbody>
@@ -36,6 +48,28 @@
 								<tr>
 									<td>{{ loop.index }}</td>
 									<td>{{ sellingItem.title }}</td>
+									<td>{{ sellingItem.quantity }}</td>
+									<td>{{ sellingItem.expiryData|date('d/m/Y H:i:s') }}</td>
+									<td class="text-center">
+										<a href="{{ path('selling_item_copy' , { 'id': sellingItem.id }) }}" class="btn btn-outline-warning" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="copy">
+											<span class="far fa-copy"></span>
+										</a>
+										<a href="{{ path('selling_item_edit' , { 'id': sellingItem.id }) }}" class="btn btn-outline-success" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="edit">
+											<span class="far fa-edit"></span>
+										</a>
+										<a href="{{ path('selling_item_delete' , { 'id': sellingItem.id }) }}" class="btn btn-outline-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="delete">
+											<span class="fas fa-trash"></span>
+										</a>
+										{% if sellingItem.publication == '1' %}
+											<a href="{{ path('selling_item_set_visibility' , { 'id': sellingItem.id , 'visibility' : '0'}) }}" class="btn btn-outline-success" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+												<span class="fas fa-eye"></span>
+											{% else %}
+												<a href="{{ path('selling_item_set_visibility' , { 'id': sellingItem.id , 'visibility' : '1'}) }}" class="btn btn-outline-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+													<span class="fas fa-eye-slash"></span>
+												{% endif %}
+											</td>
+										</tbody>
+									</td>
 								</tr>
 							{% endfor %}
 						</tbody>

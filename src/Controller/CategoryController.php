@@ -55,4 +55,90 @@ class CategoryController extends AbstractController
             'categoryForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/{_locale}/edit/{id}", name="category_edit")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editCategory(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository(Category::class)->find($id);
+        $form = $this->createForm(CategoryType::class, $category);
+        $userId = $this->getUser()->getId();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $category->setModificatedAt(new \DateTime());
+                $em->persist($category);
+                $em->flush();
+                $this->addFlash('success', 'Zedytowano Kategorie');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+            }
+
+            return $this->redirectToRoute('category');
+        }
+        return $this->render('category/new.html.twig', [
+            'categoryForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/copy/{id}", name="category_copy")
+     */
+    public function copyCategory($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository(Category::class)->find($id);
+        $newCategory = clone $category;
+
+        try {
+            $em->persist($newCategory);
+            $em->flush();
+            $this->addFlash('success', 'Skopiowano kategorie');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+        }
+        return $this->redirectToRoute('category');
+    }
+
+    /**
+     * @Route("/{_locale}/delete/{id}", name="category_delete")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteCategory($id)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $category = $em->getRepository(Category::class)->find($id);
+            $em->remove($category);
+            $em->flush();
+            $this->addFlash('success', 'Usunięto kategorie');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd podczas usuwania');
+        }
+        return $this->redirectToRoute('category');
+    }
+
+    /**
+     * @Route("/selling_item/set_visibility/{id}{visibility}", name="category_set_visibility")
+     */
+    public function makeVisible($id, $visibility)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $category = $em->getRepository(Category::class)->find($id);
+            $category->setPublication($visibility);
+            $em->persist($category);
+            $em->flush();
+            $this->addFlash('success', 'Zaktulizowano widoczność');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+        }
+        return $this->redirectToRoute('category');
+    }
 }

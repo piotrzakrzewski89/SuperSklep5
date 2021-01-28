@@ -22,7 +22,7 @@ class SellingItem
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, inversedBy="sellingItem", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Category::class, inversedBy="sellingItem")
      */
     private $category;
 
@@ -42,7 +42,7 @@ class SellingItem
     private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="sellingItems", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="sellingItems")
      * @ORM\JoinColumn()
      */
     private $language;
@@ -51,6 +51,31 @@ class SellingItem
      * @ORM\Column(type="float")
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $publication;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modified_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $expiry_data;
 
     public function __construct()
     {
@@ -148,6 +173,66 @@ class SellingItem
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPublication(): ?bool
+    {
+        return $this->publication;
+    }
+
+    public function setPublication(bool $publication): self
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->modified_at;
+    }
+
+    public function setModifiedAt(?\DateTimeInterface $modified_at): self
+    {
+        $this->modified_at = $modified_at;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getExpiryData(): ?\DateTimeInterface
+    {
+        return $this->expiry_data;
+    }
+
+    public function setExpiryData(\DateTimeInterface $expiry_data): self
+    {
+        $this->expiry_data = $expiry_data;
 
         return $this;
     }

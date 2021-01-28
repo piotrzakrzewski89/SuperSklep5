@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.statuses_admin_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<br>
+	<div class="row">
+		{% include 'inc/admin_panel.html.twig' %}
+		<div class="card col-lg-9">
+			<div class="card-header">
+				<i class="fas fa-table mr-1"></i>
+				Tabelka Status
+				<a class="btn btn-outline-info float-right" href="{{ path('statuses_new') }}">Dodaj status</a>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>name</th>
+								<th style='width: 170px'></th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>name</th>
+								<th></th>
+							</tr>
+						</tfoot>
+						<tbody>
+							{% for status in statusesData %}
+								<tr>
+									<td>{{ loop.index }}</td>
+									<td>{{ status.id }}</td>
+									<td>{{ status.name }}</td>
+									<td class="text-center">
+										<a href="{{ path('statuses_copy' , { 'id': status.id }) }}" class="btn btn-outline-warning" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="copy">
+											<span class="far fa-copy"></span>
+										</a>
+										<a href="{{ path('statuses_edit' , { 'id': status.id }) }}" class="btn btn-outline-success" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="edit">
+											<span class="far fa-edit"></span>
+										</a>
+										<a href="{{ path('statuses_delete' , { 'id': status.id }) }}" class="btn btn-outline-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="delete">
+											<span class="fas fa-trash"></span>
+										</a>
+										{% if status.publication == '1' %}
+											<a href="{{ path('statuses_set_visibility' , { 'id': status.id , 'visibility' : '0'}) }}" class="btn btn-outline-success" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+												<span class="fas fa-eye"></span>
+											{% else %}
+												<a href="{{ path('statuses_set_visibility' , { 'id': status.id , 'visibility' : '1'}) }}" class="btn btn-outline-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+													<span class="fas fa-eye-slash"></span>
+												{% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+								</tr>
+							</tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+{% endblock %}

@@ -40,6 +40,7 @@ class SellingItemController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $images = $form->get('images')->getData();
             try {
+                $newSellingItem->setCreatedAt(new \DateTime());
                 $em->persist($newSellingItem);
                 $em->flush();
                 $sellingItemId = $newSellingItem->getId();
@@ -54,7 +55,7 @@ class SellingItemController extends AbstractController
                     $em->flush();
                     $em->clear();
                 }
-                $this->addFlash('success', 'Dodano Język');
+                $this->addFlash('success', 'Dodano Przedmiot');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
             }
@@ -67,5 +68,98 @@ class SellingItemController extends AbstractController
         return $this->render('selling_item/new.html.twig', [
             'sellingItemForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{_locale}/edit/{id}", name="selling_item_edit")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editSellingItem(Request $request, $id, ImagesUploadService $imageUploadService)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sellingItem = $em->getRepository(SellingItem::class)->find($id);
+        $form = $this->createForm(SellingItemType::class, $sellingItem);
+       // $oldFilePath = $sellingItem->getPhotoPath();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pictureFileName = $form->get('photo_path')->getData();
+            try {
+                $catalogPath = 'download/' . $this->getUser()->getId() . '/';
+                if ($pictureFileName != null) {
+                    $newFileNamePhoto = $imageUploadService->uploadEditImage($pictureFileName, $oldFilePath, $catalogPath);
+                    $sellingItem->setPhotoPath($newFileNamePhoto);
+                }
+                $sellingItem->setModificatedAt(new \DateTime());
+                $em->persist($sellingItem);
+                $em->flush();
+                $this->addFlash('success', 'Zedytowano post');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+            }
+
+            return $this->redirectToRoute('selling_item');
+        }
+        return $this->render('selling_item/new.html.twig', [
+            'sellingItemForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/copy/{id}", name="selling_item_copy")
+     */
+    public function copySellingItem($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sellingItem = $em->getRepository(SellingItem::class)->find($id);
+        $newSellingItem = clone $sellingItem;
+
+        try {
+            $em->persist($newSellingItem);
+            $em->flush();
+            $this->addFlash('success', 'Skopiowano przedmiot');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+        }
+        return $this->redirectToRoute('selling_item');
+    }
+
+    /**
+     * @Route("/{_locale}/delete/{id}", name="selling_item_delete")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteSellingItem($id)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $sellingItem = $em->getRepository(SellingItem::class)->find($id);
+            $em->remove($sellingItem);
+            $em->flush();
+            $this->addFlash('success', 'Usunięto przedmiot');
+        } catch (\Exception $e) {
+            // $this->addFlash('error', 'Wystąpił nieoczekiwany błąd podczas usuwania');
+        }
+        return $this->redirectToRoute('selling_item');
+    }
+
+    /**
+     * @Route("/selling_item/set_visibility/{id}{visibility}", name="selling_item_set_visibility")
+     */
+    public function makeVisible($id, $visibility)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $sellingItem = $em->getRepository(SellingItem::class)->find($id);
+            $sellingItem->setModifiedAt(new \DateTime());
+            $sellingItem->setPublication($visibility);
+            $em->persist($sellingItem);
+            $em->flush();
+            $this->addFlash('success', 'Zaktulizowano widoczność');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+        }
+        return $this->redirectToRoute('selling_item');
     }
 }

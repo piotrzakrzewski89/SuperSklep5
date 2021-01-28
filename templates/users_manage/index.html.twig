@@ -24,7 +24,7 @@
 								<th>id</th>
 								<th>email</th>
 								<th>role</th>
-								<th>aktywnność</th>
+								<th style='width: 70px'></th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -33,7 +33,7 @@
 								<th>id</th>
 								<th>email</th>
 								<th>role</th>
-								<th>aktywnność</th>
+								<th></th>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -43,9 +43,22 @@
 									<td>{{ user.id }}</td>
 									<td>{{ user.email }}</td>
 									<td>{{ user.roles|join }}</td>
-									<td>{{ user.isVerified }}</td>
+									<td class="text-center">
+										<a href="" class="btn btn-outline-secondary" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+											<span class="fas fa-address-card"></span>
+											{% if user.isVerified == '1' %}
+												<a href="{{ path('users_manage_set_visibility' , { 'id': user.id , 'visibility' : '0'}) }}" class="btn btn-outline-success" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+													<span class="fas fa-eye"></span>
+												{% else %}
+													<a href="{{ path('users_manage_set_visibility' , { 'id': user.id , 'visibility' : '1'}) }}" class="btn btn-outline-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+														<span class="fas fa-eye-slash"></span>
+													{% endif %}
+												</td>
+											</tr>
+										{% endfor %}
+									</td>
 								</tr>
-							{% endfor %}
+							</tbody>
 						</tbody>
 					</table>
 				</div>

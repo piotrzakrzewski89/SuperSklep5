@@ -10,6 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,12 +26,22 @@ class SellingItemType extends AbstractType
             ->add('title', TextType::class, [
                 'translation_domain' => 'app',
             ])
-            ->add('description', TextareaType::class, [
-                'translation_domain' => 'app',
-                'required' => false,
-            ])
             ->add('price', NumberType::class, [
                 'translation_domain' => 'app',
+            ])
+            ->add('quantity', NumberType::class, [
+                'translation_domain' => 'app',
+            ])
+            ->add('expiry_data', DateTimeType::class, [
+                'translation_domain' => 'app',
+                'data' => new \DateTime()
+            ])
+            ->add('publication', ChoiceType::class, [
+                'translation_domain' => 'app',
+                'choices'  => [
+                    'Tak' => 1,
+                    'Nie' => 0
+                ],
             ])
             ->add('category', EntityType::class, [
                 'translation_domain' => 'app',
@@ -46,6 +58,10 @@ class SellingItemType extends AbstractType
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false
+            ])
+            ->add('description', TextareaType::class, [
+                'translation_domain' => 'app',
+                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'translation_domain' => 'app',

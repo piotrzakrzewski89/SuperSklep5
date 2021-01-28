@@ -24,4 +24,22 @@ class UsersManageController extends AbstractController
             'usersData' => $usersData,
         ]);
     }
+
+    /**
+     * @Route("/users_manage/set_visibility/{id}{visibility}", name="users_manage_set_visibility")
+     */
+    public function makeVisible($id, $visibility)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository(User::class)->find($id);
+            $user->setIsVerified($visibility);
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success', 'Zaktulizowano widoczność');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+        }
+        return $this->redirectToRoute('users_manage');
+    }
 }

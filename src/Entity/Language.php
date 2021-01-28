@@ -39,6 +39,16 @@ class Language
      */
     private $sellingItems;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $publication;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Statuses::class, mappedBy="language", cascade={"persist", "remove"})
+     */
+    private $statuses;
+
     public function __construct()
     {
         $this->sellingItems = new ArrayCollection();
@@ -116,6 +126,35 @@ class Language
                 $sellingItem->setLanguage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPublication(): ?bool
+    {
+        return $this->publication;
+    }
+
+    public function setPublication(bool $publication): self
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    public function getStatuses(): ?Statuses
+    {
+        return $this->statuses;
+    }
+
+    public function setStatuses(Statuses $statuses): self
+    {
+        // set the owning side of the relation if necessary
+        if ($statuses->getLanguage() !== $this) {
+            $statuses->setLanguage($this);
+        }
+
+        $this->statuses = $statuses;
 
         return $this;
     }

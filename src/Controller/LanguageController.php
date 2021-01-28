@@ -36,13 +36,14 @@ class LanguageController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            try {
-                $em->persist($newLanguage);
-                $em->flush();
-                $this->addFlash('success', 'Dodano Język');
-            } catch (\Exception $e) {
-                $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
-            }
+            // try {
+
+            $em->persist($newLanguage);
+            $em->flush();
+            //  $this->addFlash('success', 'Dodano Język');
+            // } catch (\Exception $e) {
+            //   $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+            // }
             if ($form->get('save')->isClicked()) {
                 return $this->redirectToRoute('language');
             } elseif ($form->get('save_add_next')->isClicked()) {
@@ -52,5 +53,90 @@ class LanguageController extends AbstractController
         return $this->render('language/new.html.twig', [
             'languageForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{_locale}/edit/{id}", name="language_edit")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editLanguage(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $language = $em->getRepository(Language::class)->find($id);
+        $form = $this->createForm(LanguageType::class, $language);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $language->setModificatedAt(new \DateTime());
+                $em->persist($language);
+                $em->flush();
+                $this->addFlash('success', 'Zedytowano język');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+            }
+
+            return $this->redirectToRoute('language');
+        }
+        return $this->render('language/new.html.twig', [
+            'languageForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/copy/{id}", name="language_copy")
+     */
+    public function copyLanguage($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $language = $em->getRepository(Language::class)->find($id);
+        $new_language = clone $language;
+
+        try {
+            $em->persist($new_language);
+            $em->flush();
+            $this->addFlash('success', 'Skopiowano język');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+        }
+        return $this->redirectToRoute('language');
+    }
+
+    /**
+     * @Route("/{_locale}/delete/{id}", name="language_delete")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteLanguage($id)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $language = $em->getRepository(Language::class)->find($id);
+            $em->remove($language);
+            $em->flush();
+            $this->addFlash('success', 'Usunięto język');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd podczas usuwania');
+        }
+        return $this->redirectToRoute('language');
+    }
+
+    /**
+     * @Route("/selling_item/set_visibility/{id}{visibility}", name="language_set_visibility")
+     */
+    public function makeVisible($id, $visibility)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $sellingItem = $em->getRepository(Language::class)->find($id);
+            $sellingItem->setPublication($visibility);
+            $em->persist($sellingItem);
+            $em->flush();
+            $this->addFlash('success', 'Zaktulizowano widoczność');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+        }
+        return $this->redirectToRoute('language');
     }
 }

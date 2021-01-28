@@ -38,6 +38,11 @@ class Category
      */
     private $language;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $publication;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,5 +108,17 @@ class Category
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getPublication(): ?bool
+    {
+        return $this->publication;
+    }
+
+    public function setPublication(bool $publication): self
+    {
+        $this->publication = $publication;
+
+        return $this;
     }
 }
