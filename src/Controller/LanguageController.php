@@ -27,7 +27,7 @@ class LanguageController extends AbstractController
         ]);
     }
 
-    #[Route('/{_locale}/new', name: 'admin_language_new')]
+    #[Route('/{_locale}/new', name: 'language_new')]
     public function categoryNew(Request $request): Response
     {
         $newLanguage = new Language();
@@ -43,8 +43,11 @@ class LanguageController extends AbstractController
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
             }
-
-            return $this->redirectToRoute('language');
+            if ($form->get('save')->isClicked()) {
+                return $this->redirectToRoute('language');
+            } elseif ($form->get('save_add_next')->isClicked()) {
+                return $this->redirectToRoute('language_new');
+            }
         }
         return $this->render('language/new.html.twig', [
             'languageForm' => $form->createView(),

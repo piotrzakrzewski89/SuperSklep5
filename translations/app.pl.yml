@@ -31,6 +31,10 @@ reset_password:
     sended_page_1: An email has been sent that contains a link that you can click to reset your password. This link will expire in 1 hour.
     sended_page_2: If you don't receive an email please check your spam folder or try again.
 
+form:
+    save_button_label: Zapisz
+    save_add_next_button_label: Zapisz i dodaj kolejne
+    cancel_button_label: Anuluj
 main:
     login:
         login_title: Logowanie

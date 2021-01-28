@@ -3,19 +3,25 @@
 
 {% block title %}
 	{{parent()}}
-	{{ 'page_title.langauge_new_page'|trans }}
+	{{ 'page_title.selling_item_new_page'|trans }}
 {% endblock %}
 
 {% block body %}
 	<br>
-	<h1>{{ 'langauge_form.title_label'|trans }}</h1>
+	<h1>{{ 'selling_item_form.title_label'|trans }}</h1>
 	{% form_theme sellingItemForm 'bootstrap_4_layout.html.twig' %}
 	{{ form_start(sellingItemForm) }}
 	{{ form_row(sellingItemForm.title) }}
 	{{ form_row(sellingItemForm.description) }}
+	{{ form_row(sellingItemForm.price) }}
 	{{ form_row(sellingItemForm.category) }}
 	{{ form_row(sellingItemForm.language) }}
-	<button type="submit" class="btn btn-outline-primary">{{ 'language_form.button_label'|trans }}</button>
+	{{ form_row(sellingItemForm.images) }}
+	<div class="form-inline">
+		{{ form_row(sellingItemForm.save, {'attr': {'class': 'btn btn-outline-primary'}}) }}
+		{{ form_row(sellingItemForm.save_add_next, {'attr': {'class': 'btn btn-outline-success'}}) }}
+		<a href="{{ path('selling_item') }}" class="btn btn-outline-danger">{{ 'form.cancel_button_label'|trans }}</a>
+	</div>
 	{{ form_end(sellingItemForm) }}
 	<br>
 {% endblock %}

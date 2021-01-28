@@ -23,7 +23,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=SellingItem::class, mappedBy="category", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=SellingItem::class, mappedBy="category")
      */
     private $sellingItem;
 
@@ -33,8 +33,8 @@ class Category
     private $code;
 
     /**
-     * @ORM\OneToOne(targetEntity=Language::class, inversedBy="category", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=Language::class, inversedBy="category")
+     * @ORM\JoinColumn()
      */
     private $language;
 
@@ -99,5 +99,9 @@ class Category
         $this->language = $language;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->name;
     }
 }

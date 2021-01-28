@@ -6,6 +6,8 @@ use App\Repository\SellingItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=SellingItemRepository::class)
@@ -35,15 +37,20 @@ class SellingItem
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="selling_item", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="selling_item", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="sellingItems")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="sellingItems", cascade={"persist", "remove"})
+     * @ORM\JoinColumn()
      */
     private $language;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
 
     public function __construct()
     {
@@ -129,6 +136,18 @@ class SellingItem
     public function setLanguage(?Language $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

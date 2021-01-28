@@ -29,7 +29,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{_locale}/new', name: 'admin_category_new')]
+    #[Route('/{_locale}/new', name: 'category_new')]
     public function categoryNew(Request $request): Response
     {
         $newCategory = new Category();
@@ -45,8 +45,11 @@ class CategoryController extends AbstractController
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
             }
-
-            return $this->redirectToRoute('category');
+            if ($form->get('save')->isClicked()) {
+                return $this->redirectToRoute('category');
+            } elseif ($form->get('save_add_next')->isClicked()) {
+                return $this->redirectToRoute('admin_category_new');
+            }
         }
         return $this->render('category/new.html.twig', [
             'categoryForm' => $form->createView(),

@@ -23,8 +23,8 @@ class Images
     private $file_path;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SellingItem::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=SellingItem::class, inversedBy="images", cascade={"persist", "remove"}))
+     * @ORM\JoinColumn()
      */
     private $selling_item;
 

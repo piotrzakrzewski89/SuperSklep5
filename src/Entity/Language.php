@@ -30,7 +30,7 @@ class Language
     private $code;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, mappedBy="language", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Category::class, mappedBy="language")
      */
     private $category;
 

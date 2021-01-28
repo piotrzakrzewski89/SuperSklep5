@@ -14,7 +14,11 @@
 	{{ form_row(categoryForm.name) }}
 	{{ form_row(categoryForm.code) }}
 	{{ form_row(categoryForm.language) }}
-	<button type="submit" class="btn btn-outline-primary">{{ 'category_form.button_label'|trans }}</button>
+	<div class="form-inline">
+		{{ form_row(categoryForm.save, {'attr': {'class': 'btn btn-outline-primary'}}) }}
+		{{ form_row(categoryForm.save_add_next, {'attr': {'class': 'btn btn-outline-success'}}) }}
+		<a href="{{ path('category') }}" class="btn btn-outline-danger">{{ 'form.cancel_button_label'|trans }}</a>
+	</div>
 	{{ form_end(categoryForm) }}
 	<br>
 {% endblock %}

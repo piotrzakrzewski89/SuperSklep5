@@ -16,7 +16,9 @@
 			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
 			<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous"/>
+			<link rel="stylesheet" href="{{ asset('assets/css/dropzone.min.css') }}">
 		{% endblock %}
+
 	</head>
 	<body>
 		{% include 'inc/nav.html.twig' %}
@@ -37,15 +39,13 @@
 				<script src="https://cdn.tiny.cloud/1/qoj0g1gtwwrui5rjqcrzv73ze1u3wy1l4rsrwojnyo4p9vfq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 				<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 				<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-				<script src="{{ asset('assets/js/chart-pie-demo.js')}}"></script>
-				<script src="{{ asset('assets/js/chart-area-demo.js')}}"></script>
-				<script src="{{ asset('assets/js/chart-bar-demo.js')}}"></script>
 				<script src="{{ asset('assets/js/datatables-demo.js')}}"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+				<script src="{{ asset('assets//js/dropzone.min.js') }}"></script>
 				<script>
 					tinymce.init({
 selector: 'textarea',
-plugins: "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,imagemanager,filemanager",
+plugins: "",
 language: "pl",
 imagetools_cors_hosts: ['picsum.photos'],
 menubar: 'file edit view insert format tools table help',
