@@ -77,6 +77,11 @@ class SellingItem
      */
     private $expiry_data;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Discounts::class, cascade={"persist", "remove"})
+     */
+    private $discounts;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -233,6 +238,18 @@ class SellingItem
     public function setExpiryData(\DateTimeInterface $expiry_data): self
     {
         $this->expiry_data = $expiry_data;
+
+        return $this;
+    }
+
+    public function getDiscounts(): ?Discounts
+    {
+        return $this->discounts;
+    }
+
+    public function setDiscounts(?Discounts $discounts): self
+    {
+        $this->discounts = $discounts;
 
         return $this;
     }

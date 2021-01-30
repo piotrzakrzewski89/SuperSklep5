@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Discounts;
 use App\Entity\SellingItem;
 use App\Service\LanguageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -100,22 +101,43 @@ class MainController extends AbstractController
         }
         $sellingItemOrders = $em->getRepository(SellingItem::class)->findAllItemsId($unique_id_1);
 
-        $sum_order = 0 ;
+        $sum_order = 0;
         foreach ($sellingItemOrders as $item) {
             foreach ($end_order_summary as $order) {
                 if ($order['id'] == $item->getId()) {
                     var_dump($order['id']);
                     echo "<br>";
-                    var_dump($item->getPrice());
+                    $discount = $em->getRepository(Discounts::class)->findBy(['id' => $item->getDiscounts()]);
+                    foreach ($discount as  $d) {
+                        $discountPercent = $d->getPercent();
+
+                    }
+
                     echo "<br>";
-                    echo "obliczenia testowo tutaj ebedebe<br>";
-                    echo "suma dla tego produktu: o ID " . $item->getId() . " = " . $order['quantity'] * $item->getPrice() . " poniewaz (order['quantity']) = " . $order['quantity'] . " * ( item->getPrice() )= " . $item->getPrice();
-                    $sum_order += $order['quantity'] * $item->getPrice();
+                    var_dump($item->getPrice());
+                    if (isset($discountPercent)) {
+                        echo "<br>";
+                        echo "Rabat jeśli istnieje: " . $discountPercent . "%";
+                        echo "<br>";
+                        $priceAfterDiscount = round($item->getPrice() - ($item->getPrice() / 100) * $discountPercent, 2);
+
+                        echo "Kwota po rabacie:" . $priceAfterDiscount;
+                        echo "<br>";
+                        echo "obliczenia testowo tutaj ebedebe<br>";
+                        echo "suma dla tego produktu: o ID " . $item->getId() . " = " . $order['quantity'] * $priceAfterDiscount  . " poniewaz (order['quantity']) = " . $order['quantity'] . " * ( item->getPrice() )= " . $priceAfterDiscount . " (kwota po rabacie ! )";
+                        $sum_order += $order['quantity'] * $priceAfterDiscount;
+                    } else {
+                        echo "<br>";
+                        echo "obliczenia testowo tutaj ebedebe<br>";
+                        echo "suma dla tego produktu: o ID " . $item->getId() . " = " . $order['quantity'] * $item->getPrice() . " poniewaz (order['quantity']) = " . $order['quantity'] . " * ( item->getPrice() )= " . $item->getPrice();
+                        $sum_order += $order['quantity'] * $item->getPrice();
+                    }
                     echo "<br><br> KONIEC <br><br>";
                 }
+                unset($discountPercent);
             }
         }
-        echo "<br><br> KONIEC Końcuf podsumowanie ebedebesrebe : ". $sum_order . " PLN <br><br>";
+        echo "<br><br> KONIEC Końcuf podsumowanie ebedebesrebe : " . $sum_order . " PLN <br><br>";
 
 
 

@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.language_admin_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<br>
+	<div class="row">
+		{% include 'inc/admin_panel.html.twig' %}
+		<div class="card col-lg-9">
+			<div class="card-header">
+				<i class="fas fa-table mr-1"></i>
+				Tabelka Języki
+				<a class="btn btn-outline-info float-right" href="{{ path('discounts_new') }}">Dodaj rabat</a>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>name</th>
+								<th>procent</th>
+								<th style='width: 220px'></th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>name</th>
+								<th>procent</th>
+								<th></th>
+							</tr>
+						</tfoot>
+						<tbody>
+							{% for discounts in discountsData %}
+								<tr>
+									<td>{{ loop.index }}</td>
+									<td>{{ discounts.id }}</td>
+									<td>{{ discounts.name }}</td>
+									<td>{{ discounts.percent }}</td>
+									<td class="text-center">
+										<a href="{{ path('discounts_details' , { 'id': discounts.id }) }}" class="btn btn-outline-primary" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show">
+											<span class="fas fa-info-circle"></span>
+										</a>
+										<a href="{{ path('discounts_copy' , { 'id': discounts.id }) }}" class="btn btn-outline-warning" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="copy">
+											<span class="far fa-copy"></span>
+										</a>
+										<a href="{{ path('discounts_edit' , { 'id': discounts.id }) }}" class="btn btn-outline-success" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="edit">
+											<span class="far fa-edit"></span>
+										</a>
+										<a href="{{ path('discounts_delete' , { 'id': discounts.id }) }}" class="btn btn-outline-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="delete">
+											<span class="fas fa-trash"></span>
+										</a>
+										{% if discounts.publication == '1' %}
+											<a href="{{ path('discounts_set_visibility' , { 'id': discounts.id , 'visibility' : '0'}) }}" class="btn btn-outline-success" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+												<span class="fas fa-eye"></span>
+											{% else %}
+												<a href="{{ path('discounts_set_visibility' , { 'id': discounts.id , 'visibility' : '1'}) }}" class="btn btn-outline-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'admin.button.publish'|trans }}">
+													<span class="fas fa-eye-slash"></span>
+												{% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+								</tr>
+							</tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+{% endblock %}

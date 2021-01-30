@@ -12,6 +12,7 @@
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
 		Panel SuperAdmina
 		<div class="list-group">
+			<a href="{{ path('discounts') }}" class="list-group-item">Rabaty</a>
 			<a href="{{ path('language') }}" class="list-group-item">Języki</a>
 			<a href="{{ path('statuses') }}" class="list-group-item">Statusy</a>
 			<a href="{{ path('users_manage') }}" class="list-group-item">Użytkownicy</a>

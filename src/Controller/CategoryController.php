@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Service\LanguageService;
 
 /**
- * UsersManage controller.
+ * Category controller.
  *
  * @Route("/admin/category")
  */
