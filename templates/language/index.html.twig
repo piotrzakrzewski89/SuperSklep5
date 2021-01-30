@@ -25,7 +25,7 @@
 								<th>id</th>
 								<th>name</th>
 								<th>code</th>
-								<th style='width: 170px'></th>
+								<th style='width: 220px'></th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -45,6 +45,9 @@
 									<td>{{ language.name }}</td>
 									<td>{{ language.code }}</td>
 									<td class="text-center">
+										<a href="{{ path('language_details' , { 'id': language.id }) }}" class="btn btn-outline-primary" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show">
+											<span class="fas fa-info-circle"></span>
+										</a>
 										<a href="{{ path('language_copy' , { 'id': language.id }) }}" class="btn btn-outline-warning" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="copy">
 											<span class="far fa-copy"></span>
 										</a>

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Form\UserManageType;
 
 /**
  * UsersManage controller.
@@ -19,9 +20,12 @@ class UsersManageController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $usersData = $em->getRepository(User::class)->findAll();
+       // $form = $this->createForm(UserManageType::class, $usersData);
+
 
         return $this->render('users_manage/index.html.twig', [
             'usersData' => $usersData,
+           // 'rolesForm' => $form->createView(),
         ]);
     }
 

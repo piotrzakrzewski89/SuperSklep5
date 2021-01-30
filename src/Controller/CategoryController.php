@@ -87,6 +87,21 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * @Route("/{_locale}/details/{id}", name="category_details")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailsCategory($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $categoryData = $em->getRepository(Category::class)->findOneBy(['id' => $id]);
+
+        return $this->render('category/details.html.twig', [
+            'categoryData' => $categoryData,
+        ]);
+    }
+
+    /**
      * @Route("/{_locale}/copy/{id}", name="category_copy")
      */
     public function copyCategory($id)

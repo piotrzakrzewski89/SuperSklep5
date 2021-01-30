@@ -10,14 +10,7 @@
 	<!-- Page Content -->
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-3">
-				<div class="list-group"><br>
-					{% for category in categoryData %}
-						<a href="#" class="list-group-item">{{ category.name }}</a>
-					{% endfor %}
-				</div>
-			</div>
-			<!-- /.col-lg-3 -->
+			{% include 'inc/main_panel.html.twig'%}
 			<div class="col-lg-9">
 				<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
 					<ol class="carousel-indicators">

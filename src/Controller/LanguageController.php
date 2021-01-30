@@ -85,6 +85,21 @@ class LanguageController extends AbstractController
     }
 
     /**
+     * @Route("/{_locale}/details/{id}", name="language_details")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailsLanguage($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $languageData = $em->getRepository(Language::class)->findOneBy(['id' => $id]);
+
+        return $this->render('language/details.html.twig', [
+            'languageData' => $languageData,
+        ]);
+    }
+
+    /**
      * @Route("/{_locale}/copy/{id}", name="language_copy")
      */
     public function copyLanguage($id)

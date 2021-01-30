@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.category_details_admin_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<br>
+	<div class="row">
+		{% include 'inc/admin_panel.html.twig' %}
+		<div class="card col-lg-9">
+			<div class="card-header">
+				<i class="fas fa-table mr-1"></i>
+				Szczegóły przedmiotu:
+				{{ sellingItemData.title}}
+			</div>
+			<div class="card-body">
+				<p>Cena:
+					{{sellingItemData.price}}
+				</p>
+				<p>Ilośc:
+					{{sellingItemData.quantity}}</p>
+				<p>Ważność do:
+					{{sellingItemData.expiryData|date('d/m/Y H:i:s') }}</p>
+				<p>Utworzony:
+					{{sellingItemData.createdAt|date('d/m/Y H:i:s') }}</p>
+				<p>Modyfikowany:
+					{{sellingItemData.modifiedAt|date('d/m/Y H:i:s') }}</p>
+				<p>Opis:
+					{{sellingItemData.description|raw}}</p>
+				<p>Widoczność:
+					{{sellingItemData.publication}}</p>
+				<p>Język:
+					{{sellingItemData.language.name}}</p>
+				<p>Kategoria:
+					{{sellingItemData.category.name}}</p>
+				<p>Zdjęcia:</p>
+				{% for image in sellingItemData.images %}
+					<img src="{{ asset('download/')}}{{sellingItemData.id}}/{{image.filePath}}" >
+				{% endfor %}
+			</div>
+			<a href="{{ path('selling_item') }}" class="btn btn-outline-danger">{{ 'form.back_button_label'|trans }}</a>
+		</div>
+
+	</div>
+	<br>
+{% endblock %}

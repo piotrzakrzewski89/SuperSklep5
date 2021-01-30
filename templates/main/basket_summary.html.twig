@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.main_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<br>
+				<h3>
+					Podsumowanie zamownienia:
+				</h3>
+				<br>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Przedmiot</th>
+							<th scope="col">Ilość</th>
+							<th scope="col">Cena</th>
+							<th scope="col">Suma</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set prod_sum = 0 %}
+						{% set prod_quantity = 0 %}
+						{% set summary_price = 0 %}
+						{% for item in sellingItemOrders %}
+							{% for prod_quant in end_order_summary %}
+								{% if item.id == prod_quant.id %}
+									{% set prod_sum = item.price * prod_quant.quantity %}
+									{% set prod_quantity = prod_quant.quantity %}
+									{% set summary_price = summary_price +  prod_sum %}
+								{% endif %}
+							{% endfor %}
+							<tr>
+								<th>{{ loop.index }}</th>
+								<td>{{ item.title}}</td>
+								<td>{{ prod_quantity  }}</td>
+								<td>{{ item.price|format_currency('PLN', {rounding_mode: 'floor'})}}</td>
+								<td>{{ prod_sum|format_currency('PLN', {rounding_mode: 'floor'}) }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</tbody>
+			</table>
+			<h3 class="float-right">Suma zamównienia :
+				{{ summary_price|format_currency('PLN', {rounding_mode: 'floor'})  }}
+			</h3>
+			<br>
+			<br>
+			<a href="{{ path('clear_basket') }}" class="btn btn-outline-danger">Wyczyść koszyk</a>
+			<a href="" class="btn btn-outline-success">Złóż zamowienie</a>
+			<br>
+			<br>
+		</div>
+	</div>
+</div>
+
+<!-- /.container -->{% endblock %}

@@ -30,7 +30,7 @@
 								<th>title</th>
 								<th>ilosc</th>
 								<th>data wygasniecia</th>
-								<th style='width: 170px'></th>
+								<th style='width: 220px'></th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -51,6 +51,9 @@
 									<td>{{ sellingItem.quantity }}</td>
 									<td>{{ sellingItem.expiryData|date('d/m/Y H:i:s') }}</td>
 									<td class="text-center">
+										<a href="{{ path('selling_item_details' , { 'id': sellingItem.id }) }}" class="btn btn-outline-primary" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show">
+											<span class="fas fa-info-circle"></span>
+										</a>
 										<a href="{{ path('selling_item_copy' , { 'id': sellingItem.id }) }}" class="btn btn-outline-warning" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="copy">
 											<span class="far fa-copy"></span>
 										</a>

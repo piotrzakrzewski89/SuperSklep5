@@ -86,6 +86,21 @@ class StatusesController extends AbstractController
     }
 
     /**
+     * @Route("/{_locale}/details/{id}", name="statuses_details")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailsStatusese($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $statusesData = $em->getRepository(Statuses::class)->findOneBy(['id' => $id]);
+
+        return $this->render('statuses/details.html.twig', [
+            'statusesData' => $statusesData,
+        ]);
+    }
+
+    /**
      * @Route("/{_locale}/copy/{id}", name="statuses_copy")
      */
     public function copyStatuses($id)

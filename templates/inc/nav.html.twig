@@ -8,7 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="exCollapsingNavbar">
             <ul class="nav navbar-nav">
-                <li class="nav-item {% if app.request.get('_route') starts with 'neews' %}active{% endif %}"><a href="#" class="nav-link">Nowości</a></li>
+                <li class="nav-item {% if app.request.get('_route') starts with 'new_products' %}active{% endif %}"><a href="{{ path('new_products') }}" class="nav-link">Nowości</a></li>
                 <li class="nav-item {% if app.request.get('_route') starts with 'proms' %}active{% endif %}"><a href="#" class="nav-link">Promocje</a></li>
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item {% if app.request.get('_route') starts with 'admin' %}active{% endif %}"><a href="{{ path('admin') }}" class="nav-link">Admin Panel</a></li>
@@ -34,9 +34,18 @@
                     <a href="{{ path('app_login') }}" class="btn btn-outline-secondary">{{ 'main.login.login_title'|trans }}</a>
                 </li>
                 {% endif %}
-            </ul>                
+            </ul>        
             <ul class="nav navbar-nav flex-row justify-content-between ml-2">
-                <li class="dropdown">
+            <li class="dropdown">
+            {% set basket_quantity = 0 %}
+            {% for basket in app.session.get('basket') %}
+            {% set basket_quantity = basket_quantity + basket.args.quantity %}         
+            {% endfor %}
+            
+             <button class="btn btn-outline-secondary toggle" data-toggle="dropdown"><span class="fas fa-shopping-basket" onclick="window.location.href='{{ path('basket_summary')}}'"></span><b>  {{basket_quantity}}</b> <span class="caret"></span></button>
+            </li>
+            </ul>        
+            <ul class="nav navbar-nav flex-row justify-content-between ml-2">              
                     <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"><b>{{ app.request.get('_locale')|upper }}</b> <span class="caret"></span></a></button>
                     <ul id="locale-dp" class="dropdown-menu">
                         <li>
@@ -52,9 +61,4 @@
             </ul>
         </div>
     </div>
-</nav>
-
-
-
-
-								  
+</nav>					  

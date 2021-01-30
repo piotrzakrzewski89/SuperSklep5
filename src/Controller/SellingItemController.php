@@ -84,13 +84,13 @@ class SellingItemController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $pictureFileName = $form->get('photo_path')->getData();
+           // $pictureFileName = $form->get('photo_path')->getData();
             try {
-                $catalogPath = 'download/' . $this->getUser()->getId() . '/';
-                if ($pictureFileName != null) {
-                    $newFileNamePhoto = $imageUploadService->uploadEditImage($pictureFileName, $oldFilePath, $catalogPath);
-                    $sellingItem->setPhotoPath($newFileNamePhoto);
-                }
+               // $catalogPath = 'download/' . $this->getUser()->getId() . '/';
+               // if ($pictureFileName != null) {
+                   // $newFileNamePhoto = $imageUploadService->uploadEditImage($pictureFileName, $oldFilePath, $catalogPath);
+                   // $sellingItem->setPhotoPath($newFileNamePhoto);
+               // }
                 $sellingItem->setModificatedAt(new \DateTime());
                 $em->persist($sellingItem);
                 $em->flush();
@@ -103,6 +103,21 @@ class SellingItemController extends AbstractController
         }
         return $this->render('selling_item/new.html.twig', [
             'sellingItemForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/details/{id}", name="selling_item_details")
+     * @param Request $request
+     * $return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailsSellingItem($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sellingItemData = $em->getRepository(SellingItem::class)->findOneBy(['id' => $id]);
+
+        return $this->render('selling_item/details.html.twig', [
+            'sellingItemData' => $sellingItemData,
         ]);
     }
 

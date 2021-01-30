@@ -19,32 +19,19 @@ class SellingItemRepository extends ServiceEntityRepository
         parent::__construct($registry, SellingItem::class);
     }
 
-    // /**
-    //  * @return SellingItem[] Returns an array of SellingItem objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return SellingItem[] Returns an array of SellingItem objects
+     */
+    public function findAllItemsId($value)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?SellingItem
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->add('select', 's')
+            ->add('from', '\App\Entity\SellingItem s')
+            ->add('where', $qb->expr()->in('s.id', $value));
+
+        $q = $qb->getQuery()->execute();
+
+        return $q;
     }
-    */
 }
