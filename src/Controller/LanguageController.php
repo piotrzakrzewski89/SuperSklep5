@@ -36,14 +36,14 @@ class LanguageController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            // try {
-
-            $em->persist($newLanguage);
-            $em->flush();
-            //  $this->addFlash('success', 'Dodano Język');
-            // } catch (\Exception $e) {
-            //   $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
-            // }
+            try {
+                $newLanguage->setPublication(0);
+                $em->persist($newLanguage);
+                $em->flush();
+                $this->addFlash('success', 'Dodano Język');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Wystąpił nieoczekiwany błąd');
+            }
             if ($form->get('save')->isClicked()) {
                 return $this->redirectToRoute('language');
             } elseif ($form->get('save_add_next')->isClicked()) {

@@ -37,7 +37,7 @@ class DiscountsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             try {
-
+                $newdiscount->setPublication(0);
                 $em->persist($newdiscount);
                 $em->flush();
                 $this->addFlash('success', 'Dodano Rabat');

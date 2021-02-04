@@ -38,7 +38,7 @@ class MainController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $lang = $LanguageService->getLang($em, $_locale);
-        $categoryData = $em->getRepository(Category::class)->findBy(['language' => $lang]);
+        $categoryData = $em->getRepository(Category::class)->findBy(['language' => $lang, 'publication' => 1]);
 
         return $this->render('main/index.html.twig', [
             'categoryData' => $categoryData
@@ -156,12 +156,10 @@ class MainController extends AbstractController
 
                         echo "Kwota po rabacie:" . $priceAfterDiscount;
                         echo "<br>";
-                        echo "obliczenia testowo tutaj ebedebe<br>";
                         echo "suma dla tego produktu: o ID " . $item->getId() . " = " . $order['quantity'] * $priceAfterDiscount  . " poniewaz (order['quantity']) = " . $order['quantity'] . " * ( item->getPrice() )= " . $priceAfterDiscount . " (kwota po rabacie ! )";
                         $sum_order += $order['quantity'] * $priceAfterDiscount;
                     } else {
                         echo "<br>";
-                        echo "obliczenia testowo tutaj ebedebe<br>";
                         echo "suma dla tego produktu: o ID " . $item->getId() . " = " . $order['quantity'] * $item->getPrice() . " poniewaz (order['quantity']) = " . $order['quantity'] . " * ( item->getPrice() )= " . $item->getPrice();
                         $sum_order += $order['quantity'] * $item->getPrice();
                     }
@@ -170,7 +168,7 @@ class MainController extends AbstractController
                 unset($discountPercent);
             }
         }
-        echo "<br><br> KONIEC Końcuf podsumowanie ebedebesrebe : " . $sum_order . " PLN <br><br>";
+        echo "<br><br> KONIEC podsumowanie : " . $sum_order . " PLN <br><br>";
 
 
 

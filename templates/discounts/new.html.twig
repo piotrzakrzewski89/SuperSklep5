@@ -16,7 +16,7 @@
 	<div class="form-inline">
 		{{ form_row(discountForm.save, {'attr': {'class': 'btn btn-outline-primary'}}) }}
 		{{ form_row(discountForm.save_add_next, {'attr': {'class': 'btn btn-outline-success'}}) }}
-		<a href="{{ path('language') }}" class="btn btn-outline-danger">{{ 'form.cancel_button_label'|trans }}</a>
+		<a href="{{ path('discounts') }}" class="btn btn-outline-danger">{{ 'form.cancel_button_label'|trans }}</a>
 	</div>
 	{{ form_end(discountForm) }}
 	<br>

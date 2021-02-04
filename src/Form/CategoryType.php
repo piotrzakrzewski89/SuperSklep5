@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Language;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +22,10 @@ class CategoryType extends AbstractType
             ->add('language', EntityType::class, [
                 'translation_domain' => 'app',
                 'class' => Language::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.publication = true');
+                },
                 'choice_label' => 'name',
             ])
             ->add('save', SubmitType::class, [

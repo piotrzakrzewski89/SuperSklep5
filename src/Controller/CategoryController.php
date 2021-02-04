@@ -39,6 +39,7 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             try {
+                $newCategory->setPublication(0);
                 $em->persist($newCategory);
                 $em->flush();
                 $this->addFlash('success', 'Dodano Kategorie');
@@ -48,7 +49,7 @@ class CategoryController extends AbstractController
             if ($form->get('save')->isClicked()) {
                 return $this->redirectToRoute('category');
             } elseif ($form->get('save_add_next')->isClicked()) {
-                return $this->redirectToRoute('admin_category_new');
+                return $this->redirectToRoute('category_new');
             }
         }
         return $this->render('category/new.html.twig', [

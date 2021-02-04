@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Category;
 use App\Entity\Language;
 use App\Entity\SellingItem;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -46,11 +47,19 @@ class SellingItemType extends AbstractType
             ->add('category', EntityType::class, [
                 'translation_domain' => 'app',
                 'class' => Category::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.publication = true');
+                },
                 'choice_label' => 'name',
             ])
             ->add('language', EntityType::class, [
                 'translation_domain' => 'app',
                 'class' => Language::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.publication = true');
+                },
                 'choice_label' => 'name',
             ])
             ->add('images', FileType::class, [
