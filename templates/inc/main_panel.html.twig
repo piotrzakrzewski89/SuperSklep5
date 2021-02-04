@@ -1,8 +1,9 @@
 <div class="col-lg-3">
 	<div class="list-group"><br>
 		{% for category in categoryData %}
-			<a href="#" class="list-group-item">{{ category.name }}</a>
+			<a href="{{ path('category_products' , {'id' : category.id }) }}" class="list-group-item">{{ category.name }}</a>
 		{% endfor %}
 	</div>
 </div>
 <!-- /.col-lg-3 -->
+

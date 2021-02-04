@@ -34,4 +34,22 @@ class SellingItemRepository extends ServiceEntityRepository
 
         return $q;
     }
+
+      /**
+     * @return SellingItem[] Returns an array of SellingItem objects
+     */
+    public function findAllDiscounts()
+    {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->add('select', 's')
+            ->add('from', '\App\Entity\SellingItem s')
+            ->add('where', $qb->expr()->isNotNull('s.discounts'));
+
+        $q = $qb->getQuery()->execute();
+
+        return $q;
+    }
 }
+
+

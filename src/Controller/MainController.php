@@ -51,8 +51,6 @@ class MainController extends AbstractController
      */
     public function newProducts($_locale, LanguageService $LanguageService): Response
     {
-        //$this->session->remove('basket');
-        //$this->session->clear();
         $em = $this->getDoctrine()->getManager();
         $lang = $LanguageService->getLang($em, $_locale);
         $sellingItemData = $em->getRepository(SellingItem::class)->findBy(['language' => $lang, 'publication' => true], ['created_at' => 'DESC']);
@@ -61,6 +59,42 @@ class MainController extends AbstractController
         return $this->render('main/new_products.html.twig', [
             'sellingItemData' => $sellingItemData,
             'categoryData' => $categoryData
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/discounts_products", name="discounts_products")
+     * @return Response
+     */
+    public function discountsProducts($_locale, LanguageService $LanguageService): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $lang = $LanguageService->getLang($em, $_locale);
+        $sellingItemData = $em->getRepository(SellingItem::class)->findAllDiscounts();
+        $categoryData = $em->getRepository(Category::class)->findBy(['language' => $lang]);
+
+        return $this->render('main/discounts_products.html.twig', [
+            'sellingItemData' => $sellingItemData,
+            'categoryData' => $categoryData
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/category_products/{id}", name="category_products")
+     * @return Response
+     */
+    public function cateogryProducts($_locale, $id, LanguageService $LanguageService): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $lang = $LanguageService->getLang($em, $_locale);
+        $sellingItemData = $em->getRepository(SellingItem::class)->findBy(['language' => $lang, 'category' => $id, 'publication' => true], ['created_at' => 'DESC']);
+        $categoryInfo = $em->getRepository(Category::class)->findOneBy(['id' => $id]);
+        $categoryData = $em->getRepository(Category::class)->findBy(['language' => $lang]);
+
+        return $this->render('main/category_products.html.twig', [
+            'sellingItemData' => $sellingItemData,
+            'categoryData' => $categoryData,
+            'categoryInfo' => $categoryInfo
         ]);
     }
 
@@ -110,7 +144,6 @@ class MainController extends AbstractController
                     $discount = $em->getRepository(Discounts::class)->findBy(['id' => $item->getDiscounts()]);
                     foreach ($discount as  $d) {
                         $discountPercent = $d->getPercent();
-
                     }
 
                     echo "<br>";

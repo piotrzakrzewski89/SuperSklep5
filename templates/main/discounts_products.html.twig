@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}
+	{{ parent() }}
+	{{ 'page_title.new_products_page'|trans }}
+{% endblock %}
+
+{% block body %}
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			{% include 'inc/main_panel.html.twig'%}
+			<!-- /.col-lg-3 -->
+			<div class="col-9">
+				{% for sellingItem in sellingItemData %}
+					<div class="card-header">
+						<a href="">{{ sellingItem.title }}</a>
+					</div>
+
+					{% for image in sellingItem.images %}
+						<div class="row">
+							{% if loop.first %}
+								<div class="col-3">
+									<img src="{{ asset('download/')}}{{sellingItem.id}}/{{image.filePath}}" class="img-thumbnail">
+								</div>
+								<div class="col-7">
+									opis:
+									{{ sellingItem.description|raw }}
+								</div>
+								<div class="col-2">
+									{{ sellingItem.price|format_currency('PLN', {rounding_mode: 'floor'}) }}
+									Rabat:
+									{{ sellingItem.discounts.percent}}%
+									<a href="{{ path('add_to_basket' , { 'id_product': sellingItem.id }) }}" class="btn btn-outline-danger">KUP TERAZ</a>
+								</div>
+							{% endif %}
+						</div>
+					{% endfor %}
+					<br>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<!-- /.row -->
+
+</div>
+<!-- /.col-lg-9 --></div><!-- /.row --></div><!-- /.container -->{% endblock %}
